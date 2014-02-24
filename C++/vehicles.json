@@ -1,0 +1,25 @@
+{
+    "Vehicle": [
+        {
+            "type": "Truck",
+            "make": "Ford",
+            "model": "F250",
+            "year": 2013,
+            "bed_length": 6
+        },
+        {
+            "type": "Truck",
+            "make": "Chevy",
+            "model": "Duramax",
+            "year": 2012,
+            "bed_length": 8
+        },
+        {
+            "type": "Car",
+            "make": "Missan",
+            "model": "Altima",
+            "year": 2013,
+            "mpg": 27
+        }
+    ]
+}
