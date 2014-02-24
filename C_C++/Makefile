@@ -84,10 +84,13 @@ app: $(TGT_APP)
 
 all: app test
 
+$(BINARY_BASE):
+	@mkdir -p $@
+
 $(BLD_DIRS):
 	@mkdir -p $@
 
-$(TGT_APP): $(TGT_OBJS)
+$(TGT_APP): $(TGT_OBJS) | $(BINARY_BASE)
 	@echo [LD] $@
 	@$(CXX) $(OPTS) $(TGT_OBJS) $(LIB_INC) $(LINK_FLAGS) -o $(TGT_APP)
 
@@ -95,7 +98,7 @@ $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@echo [CC] $<
 	@$(CXX) $(OPTS) $(HDR_INC) -MD -MP -c -o $@ $<
 
-$(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS)
+$(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) | $(BINARY_BASE)
 	@echo [LD] $@
 	@$(CXX) $(OPTS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(LIB_INC) $(GTEST_BASE)/make/gtest_main.a $(LINK_FLAGS) -o $(TST_APP)
 
