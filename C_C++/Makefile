@@ -134,4 +134,4 @@ list:
 	@echo "### TST_APP ###"
 	echo $(TST_APP)
 
--include $(DEPS)
+-include $(ALL_DEPS)
