@@ -40,6 +40,7 @@ GTEST_BASE  = gtest-1.7.0
 #---------- Compilation and linking ----------#
 CXX        = g++
 SRC_EXTS   = .cc .c
+HDR_EXTS   = .h
 LIB_EXTS   = .a .so
 CXX_LANG   = -Wall -Wextra -pedantic -Wfatal-errors -std=c++11
 CXX_OPT    = -O3 -march=native -flto -g
@@ -54,6 +55,7 @@ HDR_INC := -I$(SOURCE_BASE) -I$(LIBRARY_BASE)
 LIBS := $(foreach EXT, $(LIB_EXTS), $(shell find $(LIBRARY_BASE) -type f -iname "*$(EXT)"))
 
 ALL_SRCS := $(foreach EXT, $(SRC_EXTS), $(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)"))
+ALL_HDRS := $(foreach EXT, $(HDR_EXTS), $(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)"))
 ALL_DEPS := $(patsubst $(SOURCE_BASE)%, $(BUILD_BASE)%.d, $(ALL_SRCS))
 ALL_OBJS := $(patsubst $(SOURCE_BASE)%, $(BUILD_BASE)%.o, $(ALL_SRCS))
 
@@ -78,7 +80,7 @@ LINK_FLAGS += $(foreach LIB, $(LIBS), $(patsubst %, -l%, $(shell echo $(LIB) | s
 
 OPTS := $(CXX_LANG) $(CXX_OPT)
 
-.PHONY: app all test clean list
+.PHONY: app all test clean list count
 
 app: $(TGT_APP)
 
@@ -133,5 +135,13 @@ list:
 	echo $(TGT_APP)
 	@echo "### TST_APP ###"
 	echo $(TST_APP)
+
+count:
+	@echo "lines words bytes file"
+	@wc $(ALL_SRCS) $(ALL_HDRS) | sort -n -r -k1
+	@echo "number of source files:"
+	@wc $(ALL_SRCS) $(ALL_HDRS) | tail -n+2 | wc -l
+	@echo "number of git commits:"
+	@git rev-list HEAD --count
 
 -include $(ALL_DEPS)
