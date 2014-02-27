@@ -26,16 +26,16 @@
 ###############################################################################
 
 #---------- Basic settings  ----------#
-PROGRAM_NAME  = example
-BINARY_BASE   = bin
-BUILD_BASE    = bld
-LIBRARY_BASE  = lib
-SOURCE_BASE   = src
-MAIN_FILE     = src/main.cc
+PROGRAM_NAME  = myapp
+BINARY_BASE   = example/bin
+BUILD_BASE    = example/bld
+LIBRARY_BASE  = example/lib
+SOURCE_BASE   = example/src
+MAIN_FILE     = example/src/main.cc
 
 #---------- Unit tests ----------#
 TEST_SUFFIX = _TEST
-GTEST_BASE  = gtest-1.7.0
+GTEST_BASE  = $$HOME/.gtest-1.7.0
 
 #---------- Compilation and linking ----------#
 CXX        = g++
@@ -106,16 +106,16 @@ $(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) | $(BINARY_BASE)
 
 $(TST_UNIT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@echo [CC] $<
-	@$(CXX) $(OPTS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
+	$(CXX) $(OPTS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
 
 test: $(TST_APP)
 	@./$(TST_APP)
 
 clean:
 ifeq ($(SOURCE_BASE), $(BUILD_BASE))
-	@rm -f $(ALL_DEPS) $(ALL_OBJS) $(TGT_APP) $(TST_APP)
+	rm -f $(ALL_DEPS) $(ALL_OBJS) $(TGT_APP) $(TST_APP)
 else
-	@rm -rf $(BUILD_BASE) $(TGT_APP) $(TST_APP)
+	rm -rf $(BUILD_BASE) $(TGT_APP) $(TST_APP)
 endif
 
 list:
