@@ -1,4 +1,9 @@
-# THIS FILE SHOULD NOT BE ALTERED
+# Copyright (c) 2014, Grant Ayers
+# All rights reserved.
+#
+# license available at https://raw.github.com/grantea/makefiles/master/LICENSE
+#
+# THIS FILE SHOULD NOT BE ALTERED !!!
 
 TGT_APP := $(BINARY_BASE)/$(PROGRAM_NAME)
 TST_APP := $(BINARY_BASE)/$(PROGRAM_NAME)$(TEST_SUFFIX)
