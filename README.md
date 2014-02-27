@@ -1,4 +1,4 @@
-makefiles
+make-c-cpp
 =========
 
 A Makefile for auto-building single-target C/C++ projects.
