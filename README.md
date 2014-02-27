@@ -3,7 +3,7 @@ make-c-cpp
 
 A Makefile for auto-building single-target C/C++ projects.
 
-`Makefile` Features
+Makefile Features
 --------
 
 - Compile C++, C, or mixed projects.
