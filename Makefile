@@ -12,8 +12,8 @@ GTEST_BASE  = $$HOME/.gtest-1.7.0
 
 #---------- Compilation and linking ----------#
 CXX        = g++
-SRC_EXTS   = .cpp .cc .C .CPP .c++ .cp .cxx .c
-HDR_EXTS   = .hpp .hh .H .HPP .h++ .hp .hxx .h
+SRC_EXTS   = .cpp .cc .c++ .cp .cxx .c
+HDR_EXTS   = .hpp .hh .h++ .hp .hxx .h
 LIB_EXTS   = .a .so
 CXX_LANG   = -Wall -Wextra -pedantic -Wfatal-errors -std=c++11
 CXX_OPT    = -O3 -march=native -flto -g
