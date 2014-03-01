@@ -63,7 +63,7 @@ $(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) | $(BINARY_BASE)
 
 $(TST_UNIT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@echo [CC] $<
-	$(CXX) $(OPTS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
+	@$(CXX) $(OPTS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
 
 test: $(TST_APP)
 	@./$(TST_APP)
