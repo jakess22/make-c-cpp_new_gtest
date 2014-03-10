@@ -33,6 +33,7 @@ Common Commands
 ---------------
 
 The common commands are:
+
 | Command   | Description |
 |-----------|------------ |
 | make      | see 'make app' |
