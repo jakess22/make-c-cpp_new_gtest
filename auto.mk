@@ -39,6 +39,8 @@ LINK_FLAGS += $(foreach LIB,$(LIBS),$(patsubst %,-l%,$(shell echo $(LIB) | sed -
 ALL_EXTS := $(shell echo $(SRC_EXTS) $(HDR_EXTS) | tr " " , | tr -d .)
 LINT_FLAGS += --root=$(SOURCE_BASE) --extensions=$(ALL_EXTS)
 
+GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
+
 OPTS := $(CXX_LANG) $(CXX_OPT)
 
 .PHONY: app all lint test clean count
@@ -51,8 +53,12 @@ all:
 	@$(MAKE) --no-print-directory test
 
 lint:
+ifneq ($(wildcard $(LINT)),)
 	@echo [LINT]
 	@python $(LINT) $(LINT_FLAGS) $(ALL_SRCS) $(ALL_HDRS)
+else
+	@echo -n
+endif
 
 test: $(TST_APP)
 
@@ -71,12 +77,20 @@ $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@$(CXX) $(OPTS) $(HDR_INC) -MD -MP -c -o $@ $<
 
 $(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) | $(BINARY_BASE)
+ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [LD] $@
-	@$(CXX) $(OPTS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(LIB_INC) $(GTEST_BASE)/make/gtest_main.a $(LINK_FLAGS) -o $(TST_APP) -lpthread
+	@$(CXX) $(OPTS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(LIB_INC) $(GTEST_MAIN) $(LINK_FLAGS) -o $(TST_APP) -lpthread
+else
+	@echo -n
+endif
 
 $(TST_UNIT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
+ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [CC] $<
 	@$(CXX) $(OPTS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
+else
+	@echo -n
+endif
 
 clean:
 ifeq ($(SOURCE_BASE), $(BUILD_BASE))

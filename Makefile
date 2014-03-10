@@ -7,12 +7,12 @@ SOURCE_BASE   = example/src
 MAIN_FILE     = example/src/main.cc
 
 #--------------------- Cpp Lint -----------------------------------------------#
-LINT          = $$HOME/.google/cpplint.py
+LINT          = $(HOME)/.google/cpplint.py
 LINT_FLAGS    =
 
 #--------------------- Unit Tests ---------------------------------------------#
 TEST_SUFFIX   = _TEST
-GTEST_BASE    = $$HOME/.google/gtest-1.7.0
+GTEST_BASE    = $(HOME)/.google/gtest-1.7.0
 
 #--------------------- Compilation and Linking --------------------------------#
 CXX           = g++
