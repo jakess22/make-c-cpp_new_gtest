@@ -45,8 +45,6 @@ OPTS := $(CXX_LANG) $(CXX_OPT)
 
 .PHONY: app all lint test clean count
 
-app: $(TGT_APP)
-
 all:
 	@$(MAKE) --no-print-directory lint
 	@$(MAKE) --no-print-directory app
@@ -59,6 +57,8 @@ ifneq ($(wildcard $(LINT)),)
 else
 	@echo -n
 endif
+
+app: $(TGT_APP)
 
 test: $(TST_APP)
 

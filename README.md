@@ -36,7 +36,7 @@ The common commands are:
 
 | Command    | Description |
 |------------|------------ |
-| make       | see 'make app' |
+| make       | see 'make all' |
 | make app   | this builds the target application |
 | make lint  | this runs the cpplint syntaz checker on all source files |
 | make test  | this build the test application |
