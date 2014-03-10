@@ -1,9 +1,7 @@
-# Copyright (c) 2014, Grant Ayers
+# Copyright (c) 2014, Grant Ayers, Nic McDonald
 # All rights reserved.
-# license available at https://raw.github.com/grantea/makefiles/master/LICENSE
 #
-# Copyright (c) 2014, Nic McDonald
-# All rights reserved.
+# license available at https://raw.github.com/grantea/makefiles/master/LICENSE
 # license available at https://raw.github.com/nicmcd/make-c-cpp/master/LICENSE
 #
 # THIS FILE SHOULD NOT BE ALTERED !!!
