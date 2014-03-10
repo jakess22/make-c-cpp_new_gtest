@@ -16,9 +16,9 @@ Features
 Requirements
 ------------
 
-`Makefile` requires GNU Make and the GCC toolchain (or any other that
-supports `-M`-like dependency generation). It may be possible to use
-`Makefile` in other environments with little or no modificaiton.
+`Makefile` requires GNU Make, the GCC toolchain, and makes use of several
+Unix commands. It may be possible to use `Makefile` in other environments
+with little or no modification, but it hasn't been tested here!
 
 Example
 -------
@@ -28,3 +28,23 @@ the features of the automated Makefile system. The example project uses
 two 3rd party libraries (zlib and jsoncpp), contains a unit test for 
 Google's testing framework, and is compliant with Google's cpplint.py
 syntax style checker.
+
+Common Commands
+---------------
+
+The common commands are:
+| Command   | Description |
+|-----------|------------ |
+| make      | see 'make app' |
+| make app  | this builds the target application |
+| make lint | this runs the cpplint syntaz checker on all source files |
+| make test | this build the test application |
+| make all  | this runs 'make lint', 'make app', and 'make test' sequentially |
+
+Excluding Features
+------------------
+
+If you don't want to use Google's cpplint syntax checker, leave the LINT
+variable empty or delete the line.
+If you don't want to use Google's test framework, leave the GTEST_BASE
+variable empty or delete the line.
