@@ -1,5 +1,8 @@
-#ifndef _MODEL_VEHICLE_HPP_
-#define _MODEL_VEHICLE_HPP_
+/*
+ * Copyright (c) 2014, Joe Example
+ */
+#ifndef MODEL_VEHICLE_H_
+#define MODEL_VEHICLE_H_
 
 #include <string>
 
@@ -21,4 +24,4 @@ class Vehicle {
   int year_;
 };
 
-#endif // _MODEL_VEHICLE_HPP_
+#endif  // MODEL_VEHICLE_H_

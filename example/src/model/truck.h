@@ -1,7 +1,12 @@
-#ifndef _MODEL_TRUCK_HPP_
-#define _MODEL_TRUCK_HPP_
+/*
+ * Copyright (c) 2014, Joe Example
+ */
+#ifndef MODEL_TRUCK_H_
+#define MODEL_TRUCK_H_
 
-#include "vehicle.h"
+#include <string>
+
+#include "model/vehicle.h"
 
 class Truck : public Vehicle {
  public:
@@ -16,4 +21,4 @@ class Truck : public Vehicle {
   int bedLength_;
 };
 
-#endif // _MODEL_TRUCK_HPP_
+#endif  // MODEL_TRUCK_H_

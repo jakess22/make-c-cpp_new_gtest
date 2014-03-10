@@ -1,4 +1,9 @@
-#include "truck.h"
+/*
+ * Copyright (c) 2014, Joe Example
+ */
+#include <string>
+
+#include "model/truck.h"
 
 Truck::Truck(std::string _make, std::string _model,
              int _year, int _bedLength)

@@ -1,7 +1,12 @@
-#ifndef _MODEL_CAR_HPP_
-#define _MODEL_CAR_HPP_
+/*
+ * Copyright (c) 2014, Joe Example
+ */
+#ifndef MODEL_CAR_H_
+#define MODEL_CAR_H_
 
-#include "vehicle.h"
+#include <string>
+
+#include "model/vehicle.h"
 
 class Car : public Vehicle {
  public:
@@ -16,4 +21,4 @@ class Car : public Vehicle {
   int mpg_;
 };
 
-#endif // _MODEL_CAR_HPP_
+#endif  // MODEL_CAR_H_

@@ -1,14 +1,17 @@
+/*
+ * Copyright (c) 2014, Joe Example
+ */
 #include "gtest/gtest.h"
 
-#include "truck.h"
-#include "vehicle.h"
+#include "model/truck.h"
+#include "model/vehicle.h"
 
 TEST(TruckTest, test) {
   Truck t("Ford", "F150", 1996, 5);
-  ASSERT_TRUE(t.make() == "Ford");
-  ASSERT_TRUE(t.model() == "F150");
-  ASSERT_TRUE(t.year() == 1996);
-  ASSERT_TRUE(t.bedLength() == 5);
+  ASSERT_EQ(t.make(), "Ford");
+  ASSERT_EQ(t.model(), "F150");
+  ASSERT_EQ(t.year(), 1996);
+  ASSERT_EQ(t.bedLength(), 5);
 
   Vehicle* vehicle = dynamic_cast<Vehicle*>(&t);
   ASSERT_FALSE(vehicle == NULL);

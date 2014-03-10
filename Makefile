@@ -1,4 +1,4 @@
-#---------- Basic settings  ----------#
+#--------------------- Basic Settings -----------------------------------------#
 PROGRAM_NAME  = myapp
 BINARY_BASE   = example/bin
 BUILD_BASE    = example/bld
@@ -6,18 +6,22 @@ LIBRARY_BASE  = example/lib
 SOURCE_BASE   = example/src
 MAIN_FILE     = example/src/main.cc
 
-#---------- Unit tests ----------#
-TEST_SUFFIX = _TEST
-GTEST_BASE  = $$HOME/.gtest-1.7.0
+#--------------------- Cpp Lint -----------------------------------------------#
+LINT          = $$HOME/.google/cpplint.py
+LINT_FLAGS    =
 
-#---------- Compilation and linking ----------#
-CXX        = g++
-SRC_EXTS   = .cpp .cc .c++ .cp .cxx .c
-HDR_EXTS   = .hpp .hh .h++ .hp .hxx .h
-LIB_EXTS   = .a .so
-CXX_LANG   = -Wall -Wextra -pedantic -Wfatal-errors -std=c++11
-CXX_OPT    = -O3 -march=native -flto -g
-LINK_FLAGS = -lm
+#--------------------- Unit Tests ---------------------------------------------#
+TEST_SUFFIX   = _TEST
+GTEST_BASE    = $$HOME/.google/gtest-1.7.0
 
-#---------- Auto Makefile ----------#
+#--------------------- Compilation and Linking --------------------------------#
+CXX           = g++
+SRC_EXTS      = .cc .c
+HDR_EXTS      = .h
+LIB_EXTS      = .a .so
+CXX_LANG      = -Wall -Wextra -pedantic -Wfatal-errors -std=c++11
+CXX_OPT       = -O3 -march=native -flto -g
+LINK_FLAGS    = -lm
+
+#--------------------- Auto Makefile ------------------------------------------#
 include auto.mk

@@ -1,4 +1,7 @@
-#include "vehicle.h"
+/*
+ * Copyright (c) 2014, Joe Example
+ */
+#include "model/vehicle.h"
 
 Vehicle::Vehicle(std::string _make, std::string _model, int _year)
     : make_(_make), model_(_model), year_(_year) {}

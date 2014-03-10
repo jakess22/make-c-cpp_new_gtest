@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2014, Joe Example
+ */
+#include <cassert>
+#include <cstdint>
+#include <fstream>  //NOLINT
+#include <sstream>
+#include <vector>
+
 #include "model/vehicle.h"
 #include "model/truck.h"
 #include "model/car.h"
@@ -5,20 +14,13 @@
 #include "json/json.h"
 #include "zlib/zlib.h"
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <cassert>
-
 int main(int argc, char** argv) {
-
-  for (int i=0; i<argc; i++) {
-    std::cout << "Arg[" << i << "]: " << argv[i] << std::endl;
+  for (int i = 0; i < argc; i++) {
+    printf("Arg[%i]: %s\n", i, argv[i]);
   }
 
   if (argc != 2) {
-    std::cerr << "You must specify a settings file" << std::endl;
+    fprintf(stderr, "You must specify a settings file\n");
     return -1;
   }
 
@@ -27,8 +29,8 @@ int main(int argc, char** argv) {
 
   std::ifstream is(configFile, std::ifstream::binary);
   if (!is) {
-    std::cerr << "Settings error: could not open file '" << configFile << "'" << std::endl;
-    exit(-1);
+    fprintf(stderr, "Settings error: could not open file '%s'\n", configFile);
+    return -1;
   }
 
   Json::Reader reader;
@@ -36,22 +38,23 @@ int main(int argc, char** argv) {
   is.close();
 
   if (!success) {
-    std::cerr << "Settings error: failed to parse JSON file '" << configFile << "'" << std::endl
-              << reader.getFormattedErrorMessages() << std::endl;
+    fprintf(stderr, "Settings error: failed to parse JSON file '%s'\n",
+            configFile);
+    fprintf(stderr, "%s\n", reader.getFormattedErrorMessages().c_str());
     return -1;
   }
 
-  std::cout << "################# Settings Start #################" << std::endl;
+  printf("################# Settings Start #################\n");
   Json::StyledWriter writer;
-  std::cout << writer.write(settings) << std::endl;
-  std::cout << "################# Settings End ###################" << std::endl;
+  printf("%s\n", writer.write(settings).c_str());
+  printf("################# Settings End ###################\n");
 
   std::vector<Vehicle> trucks;
   std::vector<Vehicle> cars;
 
   Json::Value vehicles = settings["Vehicle"];
-  for (unsigned int i=0; i<vehicles.size(); i++) {
-    std::cout << "adding vehicle" << std::endl;
+  for (unsigned int i = 0; i < vehicles.size(); i++) {
+    printf("adding vehicle\n");
     Json::Value vehicle = vehicles[i];
     std::string make = vehicle["make"].asString();
     std::string model = vehicle["model"].asString();
@@ -60,34 +63,32 @@ int main(int argc, char** argv) {
       int bedLength = vehicle["bedLength"].asInt();
       Truck truck(make, model, year, bedLength);
       trucks.push_back(truck);
-    }
-    else if (vehicle["type"].asString() == "Car") {
+    } else if (vehicle["type"].asString() == "Car") {
       int mpg = vehicle["mpg"].asInt();
       Car car(make, model, year, mpg);
       cars.push_back(car);
-    }
-    else {
-      std::cerr << "unknown vehicle type: '" << vehicle["type"].asString() <<
-          "'" << std::endl;
+    } else {
+      fprintf(stderr, "unknown vehicle type: '%s'\n",
+              vehicle["type"].asCString());
     }
   }
 
   std::stringstream ss;
   for (auto it = cars.begin(); it != cars.end(); ++it) {
     Vehicle car = (*it);
-    ss << "Car: " << car.make() << " " << car.model() << " " << car.year() <<
-        " " << std::endl;
+    printf("Car: %s %s %u\n", car.make().c_str(), car.model().c_str(),
+           car.year());
   }
   for (auto it = trucks.begin(); it != trucks.end(); ++it) {
     Vehicle truck = (*it);
-    ss << "Truck: " << truck.make() << " " << truck.model() << " " <<
-        truck.year() << " " << std::endl;
+    printf("Truck: %s %s %u\n", truck.make().c_str(), truck.model().c_str(),
+           truck.year());
   }
   const std::string str = ss.str();
   const char* cstr = str.c_str();
-  long int slen = str.size();
+  int64_t slen = str.size();
 
-  std::cout << str;
+  printf("%s", str.c_str());;
 
   gzFile fout = gzopen("vehicles.gz", "wb");
   assert(gzwrite(fout, cstr, slen) == slen);
