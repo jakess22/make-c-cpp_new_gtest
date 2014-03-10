@@ -41,7 +41,7 @@ LINT_FLAGS += --root=$(SOURCE_BASE) --extensions=$(ALL_EXTS)
 
 OPTS := $(CXX_LANG) $(CXX_OPT)
 
-.PHONY: app all test clean list count
+.PHONY: app all lint test clean count
 
 app: $(TGT_APP)
 
@@ -84,24 +84,6 @@ ifeq ($(SOURCE_BASE), $(BUILD_BASE))
 else
 	rm -rf $(BUILD_BASE) $(TGT_APP) $(TST_APP)
 endif
-
-list:
-	@echo "### SRC_DIRS ###"
-	echo $(SRC_DIRS)
-	@echo "### BLD_DIRS ###"
-	echo $(BLD_DIRS)
-	@echo "### ALL_SRCS ###"
-	echo $(ALL_SRCS)
-	@echo "### TGT_SRCS ###"
-	echo $(TGT_SRCS)
-	@echo "### TST_UNIT_SRCS ###"
-	echo $(TST_UNIT_SRCS)
-	@echo "### TST_DEPS_SRCS ###"
-	echo $(TST_DEPS_SRCS)
-	@echo "### TGT_APP ###"
-	echo $(TGT_APP)
-	@echo "### TST_APP ###"
-	echo $(TST_APP)
 
 count:
 	@echo "lines words bytes file"
