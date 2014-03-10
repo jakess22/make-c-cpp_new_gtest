@@ -34,13 +34,15 @@ Common Commands
 
 The common commands are:
 
-| Command   | Description |
-|-----------|------------ |
-| make      | see 'make app' |
-| make app  | this builds the target application |
-| make lint | this runs the cpplint syntaz checker on all source files |
-| make test | this build the test application |
-| make all  | this runs 'make lint', 'make app', and 'make test' sequentially |
+| Command    | Description |
+|------------|------------ |
+| make       | see 'make app' |
+| make app   | this builds the target application |
+| make lint  | this runs the cpplint syntaz checker on all source files |
+| make test  | this build the test application |
+| make all   | this runs 'make lint', 'make app', and 'make test' sequentially |
+| make clean | removes all dependency files, object files, and binaries |
+| make count | reports statistics for lines of code, number of files, and git commits |
 
 Excluding Features
 ------------------
