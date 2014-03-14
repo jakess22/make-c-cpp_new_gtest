@@ -30,7 +30,7 @@ TST_DEPS_DEPS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.d,$(TST_DEPS_SRCS))
 TST_DEPS_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(TST_DEPS_SRCS))
 
 SRC_DIRS := $(shell find $(SOURCE_BASE) -type d -print)
-BLD_DIRS := $(patsubst $(SOURCE_BASE)/%,$(BUILD_BASE)/%,$(SRC_DIRS))
+BLD_DIRS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%,$(SRC_DIRS))
 
 LIBS := $(foreach EXT, $(LIB_EXTS),$(shell find $(LIBRARY_BASE) -type f -iname "*$(EXT)"))
 LIB_INC := $(patsubst %, -L%, $(dir $(LIBS)))
