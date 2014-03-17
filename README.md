@@ -25,7 +25,7 @@ Example
 
 The example directory is an example C++ project that utilizes most of
 the features of the automated Makefile system. The example project uses
-two 3rd party libraries (zlib and jsoncpp), contains a unit test for 
+two 3rd party libraries (zlib and jsoncpp), contains a unit test for
 Google's testing framework, and is compliant with Google's cpplint.py
 syntax style checker.
 
@@ -51,3 +51,18 @@ If you don't want to use Google's cpplint syntax checker, leave the LINT
 variable empty or delete the line.
 If you don't want to use Google's test framework, leave the GTEST_BASE
 variable empty or delete the line.
+
+Environment Setup
+-----------------
+
+If you want this to run out-of-the-box with no changes, run the following commands:
+
+```shell
+mkdir ~/.google
+cd ~/.google
+wget http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
+wget https://googletest.googlecode.com/files/gtest-1.7.0.zip
+unzip gtest-1.7.0.zip
+cd gtest-1.7.0/make
+make gtest_main.a
+```
