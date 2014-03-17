@@ -55,7 +55,8 @@ variable empty or delete the line.
 Environment Setup
 -----------------
 
-If you want this to run out-of-the-box with no changes, run the following commands:
+If you want this to run out-of-the-box with no changes, run the following commands prior 
+to running any make commands:
 
 ```shell
 mkdir ~/.google
