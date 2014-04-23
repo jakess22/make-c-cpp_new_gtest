@@ -6,7 +6,7 @@
 
 #include <string>
 
-#include "model/vehicle.h"
+#include "model/Vehicle.h"
 
 class Car : public Vehicle {
  public:

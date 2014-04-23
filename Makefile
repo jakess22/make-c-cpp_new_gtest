@@ -17,7 +17,7 @@ GTEST_BASE    = $(HOME)/.google/gtest-1.7.0
 #--------------------- Compilation and Linking --------------------------------#
 CXX           = g++
 SRC_EXTS      = .cc .c
-HDR_EXTS      = .h
+HDR_EXTS      = .h .tcc
 LIB_EXTS      = .a .so
 CXX_LANG      = -Wall -Wextra -pedantic -Wfatal-errors -std=c++11
 CXX_OPT       = -O3 -march=native -flto -g

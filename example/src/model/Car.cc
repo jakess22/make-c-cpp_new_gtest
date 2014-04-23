@@ -3,7 +3,7 @@
  */
 #include <string>
 
-#include "model/car.h"
+#include "model/Car.h"
 
 Car::Car(std::string _make, std::string _model,
          int _year, int _mpg)

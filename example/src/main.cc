@@ -7,9 +7,11 @@
 #include <sstream>
 #include <vector>
 
-#include "model/vehicle.h"
-#include "model/truck.h"
-#include "model/car.h"
+#include "util/LinkedList.h"
+
+#include "model/Vehicle.h"
+#include "model/Truck.h"
+#include "model/Car.h"
 
 #include "json/json.h"
 #include "zlib/zlib.h"
@@ -51,6 +53,7 @@ int main(int argc, char** argv) {
 
   std::vector<Vehicle> trucks;
   std::vector<Vehicle> cars;
+  LinkedList<Vehicle> allVehicles;
 
   Json::Value vehicles = settings["Vehicle"];
   for (unsigned int i = 0; i < vehicles.size(); i++) {
@@ -63,15 +66,20 @@ int main(int argc, char** argv) {
       int bedLength = vehicle["bedLength"].asInt();
       Truck truck(make, model, year, bedLength);
       trucks.push_back(truck);
+      allVehicles.push(&truck);
     } else if (vehicle["type"].asString() == "Car") {
       int mpg = vehicle["mpg"].asInt();
       Car car(make, model, year, mpg);
       cars.push_back(car);
+      allVehicles.push(&car);
     } else {
       fprintf(stderr, "unknown vehicle type: '%s'\n",
               vehicle["type"].asCString());
+      return -1;
     }
   }
+
+  printf("you initialized %lu vehicles\n", allVehicles.size());
 
   std::stringstream ss;
   for (auto it = cars.begin(); it != cars.end(); ++it) {

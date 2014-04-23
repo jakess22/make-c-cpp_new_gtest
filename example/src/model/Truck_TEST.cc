@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2014, Joe Example
  */
-#include "gtest/gtest.h"
+#include "model/Truck.h"
+#include "model/Vehicle.h"
 
-#include "model/truck.h"
-#include "model/vehicle.h"
+#include "gtest/gtest.h"
 
 TEST(TruckTest, test) {
   Truck t("Ford", "F150", 1996, 5);

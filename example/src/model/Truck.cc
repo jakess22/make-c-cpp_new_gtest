@@ -3,7 +3,7 @@
  */
 #include <string>
 
-#include "model/truck.h"
+#include "model/Truck.h"
 
 Truck::Truck(std::string _make, std::string _model,
              int _year, int _bedLength)
