@@ -20,7 +20,7 @@ SRC_EXTS      = .cc .c
 HDR_EXTS      = .h .tcc
 LIB_EXTS      = .a .so
 CXX_LANG      = -Wall -Wextra -pedantic -Wfatal-errors -std=c++11
-CXX_OPT       = -O3 -march=native -flto -g
+CXX_OPT       = -O3 -march=native -g
 LINK_FLAGS    = -lm
 
 #--------------------- Auto Makefile ------------------------------------------#
