@@ -10,14 +10,13 @@ TGT_APP := $(BINARY_BASE)/$(PROGRAM_NAME)
 TST_APP := $(BINARY_BASE)/$(PROGRAM_NAME)$(TEST_SUFFIX)
 
 HDR_INC := -I$(SOURCE_BASE) -I$(LIBRARY_BASE)
-LIBS := $(foreach EXT,$(LIB_EXTS),$(shell find $(LIBRARY_BASE) -type f -iname "*$(EXT)"))
 
-ALL_SRCS := $(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)"))
-ALL_HDRS := $(foreach EXT,$(HDR_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)"))
+ALL_SRCS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)")))
+ALL_HDRS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(HDR_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)")))
 ALL_DEPS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.d,$(ALL_SRCS))
 ALL_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(ALL_SRCS))
 
-TST_UNIT_SRCS := $(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(TEST_SUFFIX)$(EXT)"))
+TST_UNIT_SRCS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(TEST_SUFFIX)$(EXT)")))
 TST_UNIT_DEPS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.d,$(TST_UNIT_SRCS))
 TST_UNIT_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(TST_UNIT_SRCS))
 
@@ -32,7 +31,7 @@ TST_DEPS_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(TST_DEPS_SRCS))
 SRC_DIRS := $(shell find $(SOURCE_BASE) -type d -print)
 BLD_DIRS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%,$(SRC_DIRS))
 
-LIBS := $(foreach EXT, $(LIB_EXTS),$(shell find $(LIBRARY_BASE) -type f -iname "*$(EXT)"))
+LIBS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(LIB_EXTS),$(shell find $(LIBRARY_BASE) -type f -iname "*$(EXT)")))
 LIB_INC := $(patsubst %, -L%, $(dir $(LIBS)))
 LINK_FLAGS += $(foreach LIB,$(LIBS),$(patsubst %,-l%,$(shell echo $(LIB) | sed -e 's@.*/lib@@g' -e 's@\..*@@g')))
 
@@ -43,12 +42,7 @@ GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
 OPTS := $(CXX_LANG) $(CXX_OPT)
 
-.PHONY: app all lint test main_check clean count
-
-all:
-	@$(MAKE) --no-print-directory lint
-	@$(MAKE) --no-print-directory app
-	@$(MAKE) --no-print-directory test
+.PHONY: app lint test main_check clean count
 
 lint:
 ifneq ($(wildcard $(LINT)),)
