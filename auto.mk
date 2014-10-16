@@ -42,7 +42,9 @@ GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
 OPTS := $(CXX_LANG) $(CXX_OPT)
 
-.PHONY: app lint test main_check clean count
+.PHONY: all app lint test main_check clean count
+
+all: app
 
 lint:
 ifneq ($(wildcard $(LINT)),)
