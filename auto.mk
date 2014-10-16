@@ -104,4 +104,7 @@ count:
 	@echo "number of total files : "$(shell wc $(ALL_SRCS) $(ALL_HDRS) | tail -n+2 | wc -l)
 	@echo "number of git commits : "$(shell git rev-list HEAD --count)
 
+updatemk:
+	wget https://raw.githubusercontent.com/nicmcd/make-c-cpp/master/auto.mk -O auto.mk
+
 -include $(ALL_DEPS)
