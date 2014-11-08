@@ -42,7 +42,7 @@ GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
 OPTS := $(CXX_LANG) $(CXX_OPT)
 
-.PHONY: all app lint test main_check clean count
+.PHONY: all app lint test main_check clean count updatemk showlibs
 
 all: app
 
@@ -108,5 +108,10 @@ count:
 
 updatemk:
 	wget https://raw.githubusercontent.com/nicmcd/make-c-cpp/master/auto.mk -O auto.mk
+
+showlibs:
+	@echo $(LIBS)
+	@echo $(LIB_INC)
+	@echo $(LINK_FLAGS)
 
 -include $(ALL_DEPS)
