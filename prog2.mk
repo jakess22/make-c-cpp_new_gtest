@@ -16,7 +16,7 @@ TEST_SUFFIX   = _TEST
 GTEST_BASE    = $(HOME)/.google/gtest-1.7.0
 
 #--------------------- Compilation and Linking --------------------------------#
-CXX           = g++
+CXX           = g++-4.8
 SRC_EXTS      = .cc .c
 HDR_EXTS      = .h .tcc
 LIB_EXTS      = .a .so
