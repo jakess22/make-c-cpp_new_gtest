@@ -10,7 +10,7 @@
 TGT_APP := $(BINARY_BASE)/$(PROGRAM_NAME)
 TST_APP := $(BINARY_BASE)/$(PROGRAM_NAME)$(TEST_SUFFIX)
 
-HDR_INC := -I$(SOURCE_BASE) -I$(LIBRARY_BASE)
+HDR_INC := -I$(SOURCE_BASE)
 
 ALL_SRCS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)")))
 ALL_HDRS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(HDR_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)")))
@@ -32,10 +32,6 @@ TST_DEPS_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(TST_DEPS_SRCS))
 SRC_DIRS := $(shell find $(SOURCE_BASE) -type d -print)
 BLD_DIRS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%,$(SRC_DIRS))
 
-LIBS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(LIB_EXTS),$(shell find $(LIBRARY_BASE) -type f -iname "*$(EXT)")))
-LIB_INC := $(patsubst %, -L%, $(dir $(LIBS)))
-LINK_FLAGS += $(foreach LIB,$(LIBS),$(patsubst %,-l%,$(shell echo $(LIB) | sed -e 's@.*/lib@@g' -e 's@\..*@@g')))
-
 ALL_EXTS := $(shell echo $(SRC_EXTS) $(HDR_EXTS) | tr " " , | tr -d .)
 LINT_FLAGS += --root=$(SOURCE_BASE) --extensions=$(ALL_EXTS)
 
@@ -43,7 +39,7 @@ GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
 OPTS := $(CXX_LANG) $(CXX_OPT)
 
-.PHONY: all app lint test clean count updatemk showlibs
+.PHONY: all app lint test clean count updatemk
 
 all: app
 
@@ -67,7 +63,7 @@ $(BLD_DIRS):
 
 $(TGT_APP): $(TGT_OBJS) | $(BINARY_BASE)
 	@echo [LD] $@
-	@$(CXX) $(OPTS) $(TGT_OBJS) $(LIB_INC) $(LINK_FLAGS) -o $(TGT_APP)
+	@$(CXX) $(OPTS) $(TGT_OBJS) $(LINK_FLAGS) -o $(TGT_APP)
 
 $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@echo [CC] $<
@@ -76,7 +72,7 @@ $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 $(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) | $(BINARY_BASE)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [LD] $@
-	@$(CXX) $(OPTS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(LIB_INC) $(GTEST_MAIN) $(LINK_FLAGS) -o $(TST_APP) -lpthread
+	@$(CXX) $(OPTS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(GTEST_MAIN) $(LINK_FLAGS) -o $(TST_APP) -lpthread
 else
 	@echo -n
 endif
@@ -106,10 +102,5 @@ count:
 
 updatemk:
 	wget https://raw.githubusercontent.com/nicmcd/make-c-cpp/master/auto.mk -O auto.mk
-
-showlibs:
-	@echo $(LIBS)
-	@echo $(LIB_INC)
-	@echo $(LINK_FLAGS)
 
 -include $(ALL_DEPS)

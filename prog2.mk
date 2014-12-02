@@ -2,7 +2,6 @@
 PROGRAM_NAME  = prog2
 BINARY_BASE   = example/bin
 BUILD_BASE    = example/bld
-LIBRARY_BASE  = example/lib
 SOURCE_BASE   = example/src
 MAIN_FILE     = example/src/prog2.cc
 IGNORE_FILES  = example/src/prog1.cc
@@ -22,7 +21,7 @@ HDR_EXTS      = .h .tcc
 LIB_EXTS      = .a .so
 CXX_LANG      = -Wall -Wextra -pedantic -Wfatal-errors -std=c++11
 CXX_OPT       = -O3 -march=native -g
-LINK_FLAGS    = -lm
+LINK_FLAGS    = -lz -ljsoncpp
 
 #--------------------- Auto Makefile ------------------------------------------#
 include auto.mk

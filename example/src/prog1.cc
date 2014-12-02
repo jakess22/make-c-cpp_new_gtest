@@ -1,6 +1,9 @@
 /*
  * Copyright (c) 2014, Joe Example
  */
+#include <jsoncpp/json/json.h>
+#include <zlib.h>
+
 #include <cassert>
 #include <cstdint>
 #include <fstream>  //NOLINT
@@ -12,9 +15,6 @@
 #include "model/Vehicle.h"
 #include "model/Truck.h"
 #include "model/Car.h"
-
-#include "json/json.h"
-#include "zlib/zlib.h"
 
 int main(int argc, char** argv) {
   for (int i = 0; i < argc; i++) {
