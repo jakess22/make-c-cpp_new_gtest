@@ -6,10 +6,10 @@ A Makefile for auto-building single-target C/C++ projects.
 Features
 --------
 
-- Compile C++, C, or mixed projects.
+- Build C++, C, or mixed projects.
+- Build multiple binaries (one Makefile per binary is required).
 - Compile and link options are easily configurable.
 - Automatic dependency discovery, including header files.
-- Automatic shared library discovery and linker inclusion
 - Integrated support for testing with Google's C++ testing framework.
 - Integrated support for syntax style checking with Google's cpplint.py
 
@@ -25,22 +25,25 @@ Example
 
 The example directory is an example C++ project that utilizes most of
 the features of the automated Makefile system. The example project uses
-two 3rd party libraries (zlib and jsoncpp), contains a unit test for
-Google's testing framework, and is compliant with Google's cpplint.py
-syntax style checker.
+two 3rd party libraries, zlib and jsoncpp (must be installed on the system), 
+contains a unit test for Google's testing framework, and is compliant with 
+Google's cpplint.py syntax style checker. This example builds two binaries.
 
 Common Commands
 ---------------
 
 The common commands are:
 
-| Command            | Description |
-|--------------------|------------ |
-| make -f <mk> app   | this builds the target application |
-| make -f <mk> lint  | this runs the cpplint syntaz checker on all source files |
-| make -f <mk> test  | this build the test application |
-| make -f <mk> clean | removes all dependency files, object files, and binaries |
-| make -f <mk> count | reports statistics for lines of code, number of files, and git commits |
+| Command                  | Description |
+|--------------------------|------------ |
+| make -f &lt;mk&gt; app   | this builds the target application |
+| make -f &lt;mk&gt; lint  | this runs the cpplint syntaz checker on all source files |
+| make -f &lt;mk&gt; test  | this build the test application |
+| make -f &lt;mk&gt; clean | removes all dependency files, object files, and binaries |
+| make -f &lt;mk&gt; count | reports statistics for lines of code, number of files, and git commits |
+
+Note: For projects with only one binary, name your make file "Makefile" or 
+"makefile", then omit "-f &lt;mk&gt;" from the examples above. 
 
 Excluding Features
 ------------------
