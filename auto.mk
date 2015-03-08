@@ -41,7 +41,11 @@ OPTS := $(CXX_LANG) $(CXX_OPT)
 
 .PHONY: all app lint test clean count updatemk
 
-all: app
+app: $(TGT_APP)
+
+test: $(TST_APP)
+
+all: lint app test
 
 lint:
 ifneq ($(wildcard $(LINT)),)
@@ -51,9 +55,6 @@ else
 	@echo -n
 endif
 
-app: $(TGT_APP)
-
-test: $(TST_APP)
 
 $(BINARY_BASE):
 	@mkdir -p $@
