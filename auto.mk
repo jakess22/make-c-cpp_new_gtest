@@ -34,33 +34,36 @@ BLD_DIRS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%,$(SRC_DIRS))
 
 ALL_EXTS := $(shell echo $(SRC_EXTS) $(HDR_EXTS) | tr " " , | tr -d .)
 LINT_FLAGS += --root=$(SOURCE_BASE) --extensions=$(ALL_EXTS)
+LINT_OUT := $(BUILD_BASE)/$(PROGRAM_NAME).lint
 
 GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
 OPTS := $(CXX_LANG) $(CXX_OPT)
 
-.PHONY: all app lint test clean count updatemk
+.PHONY: all lint app test clean count updatemk
 
 app: $(TGT_APP)
 
+lint: $(LINT_OUT)
+
 test: $(TST_APP)
 
-all: lint app test
-
-lint:
-ifneq ($(wildcard $(LINT)),)
-	@echo [LINT]
-	@python $(LINT) $(LINT_FLAGS) $(ALL_SRCS) $(ALL_HDRS)
-else
-	@echo -n
-endif
-
+all: $(LINT_OUT) app test
 
 $(BINARY_BASE):
 	@mkdir -p $@
 
 $(BLD_DIRS):
 	@mkdir -p $@
+
+$(LINT_OUT): $(ALL_SRCS) $(ALL_HDRS) | $(BUILD_BASE)
+ifneq ($(wildcard $(LINT)),)
+	@echo [LINT]
+	@python $(LINT) $(LINT_FLAGS) $(ALL_SRCS) $(ALL_HDRS)
+else
+	@echo -n
+endif
+	@echo "linted" > $(LINT_OUT)
 
 $(TGT_APP): $(TGT_OBJS) | $(BINARY_BASE)
 	@echo [LD] $@
