@@ -38,8 +38,6 @@ LINT_OUT := $(BUILD_BASE)/$(PROGRAM_NAME).lint
 
 GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
-OPTS := $(CXX_LANG) $(CXX_OPT)
-
 .PHONY: all lint app test clean count updatemk
 
 app: $(TGT_APP)
@@ -67,16 +65,16 @@ endif
 
 $(TGT_APP): $(TGT_OBJS) | $(BINARY_BASE)
 	@echo [LD] $@
-	@$(CXX) $(OPTS) $(TGT_OBJS) $(LINK_FLAGS) -o $(TGT_APP)
+	@$(CXX) $(CXX_FLAGS) $(TGT_OBJS) $(LINK_FLAGS) -o $(TGT_APP)
 
 $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@echo [CC] $<
-	@$(CXX) $(OPTS) $(HDR_INC) -MD -MP -c -o $@ $<
+	@$(CXX) $(CXX_FLAGS) $(HDR_INC) -MD -MP -c -o $@ $<
 
 $(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) | $(BINARY_BASE)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [LD] $@
-	@$(CXX) $(OPTS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(GTEST_MAIN) $(LINK_FLAGS) -o $(TST_APP) -lpthread
+	@$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(GTEST_MAIN) $(LINK_FLAGS) -o $(TST_APP) -lpthread
 else
 	@echo -n
 endif
@@ -84,16 +82,17 @@ endif
 $(TST_UNIT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [CC] $<
-	@$(CXX) $(OPTS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
+	@$(CXX) $(CXX_FLAGS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
 else
 	@echo -n
 endif
 
 clean:
 ifeq ($(SOURCE_BASE), $(BUILD_BASE))
-	rm -f $(ALL_DEPS) $(ALL_OBJS) $(TGT_APP) $(TST_APP)
+	@echo "Awwww, clean will destroy your source if you build in the same spot!"
+	false
 else
-	rm -rf $(BUILD_BASE) $(TGT_APP) $(TST_APP)
+	rm -rf $(BUILD_BASE) $(BINARY_BASE)
 endif
 
 count:

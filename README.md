@@ -59,12 +59,16 @@ Environment Setup
 If you want this to run out-of-the-box with no changes, run the following commands prior 
 to running any make commands:
 
-```shell
-mkdir ~/.google
-cd ~/.google
-wget http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
-wget https://googletest.googlecode.com/files/gtest-1.7.0.zip
-unzip gtest-1.7.0.zip
-cd gtest-1.7.0/make
+The example application needs libjsoncpp and libz
+```bash
+sudo apt-get install libjsoncpp-dev zlib1g-dev
+```
+
+```bash
+mkdir ~/.makeccpp
+cd ~/.makeccpp
+git clone https://github.com/nicmcd/gtest.git
+git clone https://github.com/nicmcd/cpplint.git
+cd gtest/make
 make gtest_main.a
 ```
