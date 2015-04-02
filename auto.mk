@@ -91,9 +91,12 @@ clean:
 ifeq ($(SOURCE_BASE), $(BUILD_BASE))
 	@echo "Awwww, clean will destroy your source if you build in the same spot!"
 	false
-else
-	rm -rf $(BUILD_BASE) $(BINARY_BASE)
 endif
+ifeq ($(SOURCE_BASE), $(BINARY_BASE))
+	@echo "Awwww, clean will destroy your source if you build in the same spot!"
+	false
+endif
+	rm -rf $(BUILD_BASE) $(BINARY_BASE)
 
 count:
 	@echo "lines words bytes file"
