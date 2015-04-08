@@ -47,7 +47,7 @@ Library Build Commands
 
 | Command    | Description |
 |------------|------------ |
-| make all   | (default) same as 'make libd libd libh lint test' |
+| make all   | (default) same as 'make libs libd libh lint test' |
 | make libs  | builds the static library |
 | make libd  | builds the dynamic library |
 | make libh  | builds the library include directory |
