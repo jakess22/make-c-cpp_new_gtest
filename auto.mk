@@ -58,10 +58,10 @@ $(LINT_OUT): $(ALL_SRCS) $(ALL_HDRS) | $(BUILD_BASE)
 ifneq ($(wildcard $(LINT)),)
 	@echo [LINT]
 	@python $(LINT) $(LINT_FLAGS) $(ALL_SRCS) $(ALL_HDRS)
+	@echo "linted" > $(LINT_OUT)
 else
 	@echo -n
 endif
-	@echo "linted" > $(LINT_OUT)
 
 $(TGT_APP): $(TGT_OBJS) | $(BINARY_BASE)
 	@echo [LD] $@
