@@ -11,7 +11,7 @@ TGT_DLIB := $(BINARY_BASE)/lib$(PROGRAM_NAME).so
 TGT_SLIB := $(BUILD_BASE)/lib$(PROGRAM_NAME).a
 TST_APP := $(BINARY_BASE)/$(PROGRAM_NAME)$(TEST_SUFFIX)
 
-HDR_INC := -I$(SOURCE_BASE) $(patsubst %,-I%,$(HDR_DIRS))
+HDR_INC := -I$(SOURCE_BASE) $(patsubst %,-I%,$(HEADER_DIRS))
 
 ALL_SRCS := $(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)"))
 ALL_HDRS := $(foreach EXT,$(HDR_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)"))
