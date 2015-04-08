@@ -1,10 +1,13 @@
 #--------------------- Basic Settings -----------------------------------------#
-PROGRAM_NAME  := prog2
-BINARY_BASE   := example/bin/prog2
-BUILD_BASE    := example/bld/prog2
-SOURCE_BASE   := example/src
-MAIN_FILE     := example/src/prog2.cc
-IGNORE_FILES  := example/src/prog1.cc
+PROGRAM_NAME  := myprogram
+BINARY_BASE   := bin
+BUILD_BASE    := bld
+SOURCE_BASE   := src
+MAIN_FILE     := src/prog.cc
+
+#--------------------- External Libraries -------------------------------------#
+HEADER_DIRS   := ../libmodel/inc
+STATIC_LIBS   := ../libmodel/bld/libmodel.a
 
 #--------------------- Cpp Lint -----------------------------------------------#
 LINT          := $(HOME)/.makeccpp/cpplint/cpplint.py
@@ -19,8 +22,8 @@ CXX           := g++
 SRC_EXTS      := .cc .c
 HDR_EXTS      := .h .tcc
 CXX_FLAGS     := -Wall -Wextra -pedantic -Wfatal-errors -std=c++11
-CXX_FLAGS     += -O3 -march=native -g
+CXX_FLAGS     += -O2 -march=native -g
 LINK_FLAGS    := -lz -ljsoncpp
 
 #--------------------- Auto Makefile ------------------------------------------#
-include auto.mk
+include ../auto_bin.mk

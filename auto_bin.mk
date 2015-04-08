@@ -10,14 +10,14 @@
 TGT_APP := $(BINARY_BASE)/$(PROGRAM_NAME)
 TST_APP := $(BINARY_BASE)/$(PROGRAM_NAME)$(TEST_SUFFIX)
 
-HDR_INC := -I$(SOURCE_BASE)
+HDR_INC := -I$(SOURCE_BASE) $(addprefix -I,$(HEADER_DIRS))
 
-ALL_SRCS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)")))
-ALL_HDRS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(HDR_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)")))
+ALL_SRCS := $(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)"))
+ALL_HDRS := $(foreach EXT,$(HDR_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)"))
 ALL_DEPS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.d,$(ALL_SRCS))
 ALL_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(ALL_SRCS))
 
-TST_UNIT_SRCS := $(filter-out $(IGNORE_FILES),$(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(TEST_SUFFIX)$(EXT)")))
+TST_UNIT_SRCS := $(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(TEST_SUFFIX)$(EXT)"))
 TST_UNIT_DEPS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.d,$(TST_UNIT_SRCS))
 TST_UNIT_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(TST_UNIT_SRCS))
 
@@ -40,13 +40,13 @@ GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
 .PHONY: all lint app test clean count updatemk
 
+all: $(LINT_OUT) app test
+
 app: $(TGT_APP)
 
 lint: $(LINT_OUT)
 
 test: $(TST_APP)
-
-all: $(LINT_OUT) app test
 
 $(BINARY_BASE):
 	@mkdir -p $@
@@ -63,18 +63,18 @@ else
 	@echo -n
 endif
 
-$(TGT_APP): $(TGT_OBJS) | $(BINARY_BASE)
+$(TGT_APP): $(TGT_OBJS) $(STATIC_LIBS) | $(BINARY_BASE)
 	@echo [LD] $@
-	@$(CXX) $(CXX_FLAGS) $(TGT_OBJS) $(LINK_FLAGS) -o $(TGT_APP)
+	@$(CXX) $(CXX_FLAGS) $(TGT_OBJS) $(STATIC_LIBS) $(LINK_FLAGS) -o $(TGT_APP)
 
 $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@echo [CC] $<
 	@$(CXX) $(CXX_FLAGS) $(HDR_INC) -MD -MP -c -o $@ $<
 
-$(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) | $(BINARY_BASE)
+$(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(STATIC_LIBS) | $(BINARY_BASE)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [LD] $@
-	@$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(GTEST_MAIN) $(LINK_FLAGS) -o $(TST_APP) -lpthread
+	@$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(GTEST_MAIN) $(STATIC_LIBS) $(LINK_FLAGS) -o $(TST_APP) -lpthread
 else
 	@echo -n
 endif
@@ -107,6 +107,6 @@ count:
 	@echo "number of git commits : "$(shell git rev-list HEAD --count)
 
 updatemk:
-	wget https://raw.githubusercontent.com/nicmcd/make-c-cpp/master/auto.mk -O auto.mk
+	wget https://raw.githubusercontent.com/nicmcd/make-c-cpp/master/auto_bin.mk -O auto_bin.mk
 
 -include $(ALL_DEPS)

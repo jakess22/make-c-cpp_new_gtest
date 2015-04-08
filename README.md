@@ -1,5 +1,5 @@
 make-c-cpp
-=========
+==========
 
 A Makefile for auto-building single-target C/C++ projects.
 
@@ -7,11 +7,11 @@ Features
 --------
 
 - Build C++, C, or mixed projects.
-- Build multiple binaries (one Makefile per binary is required).
+- Binaries and shared libraries.
 - Compile and link options are easily configurable.
 - Automatic dependency discovery, including header files.
 - Integrated support for testing with Google's C++ testing framework.
-- Integrated support for syntax style checking with Google's cpplint.py
+- Integrated support for syntax style checking with Google's cpplint.py.
 
 Requirements
 ------------
@@ -27,23 +27,34 @@ The example directory is an example C++ project that utilizes most of
 the features of the automated Makefile system. The example project uses
 two 3rd party libraries, zlib and jsoncpp (must be installed on the system), 
 contains a unit test for Google's testing framework, and is compliant with 
-Google's cpplint.py syntax style checker. This example builds two binaries.
+Google's cpplint.py syntax style checker. The example is comprised of two
+subprojects, one shared library, and one binary.
 
-Common Commands
----------------
+Binary Build Commands
+---------------------
 
-The common commands are:
+| Command    | Description |
+|------------|------------ |
+| make all   | (default) same as 'make app lint test' |
+| make app   | builds the target application |
+| make lint  | runs the cpplint syntax checker on all source files |
+| make test  | builds the test application |
+| make clean | removes all dependency files, object files, and binaries |
+| make count | reports statistics for lines of code, number of files, and git commits |
 
-| Command                  | Description |
-|--------------------------|------------ |
-| make -f &lt;mk&gt; app   | this builds the target application |
-| make -f &lt;mk&gt; lint  | this runs the cpplint syntaz checker on all source files |
-| make -f &lt;mk&gt; test  | this build the test application |
-| make -f &lt;mk&gt; clean | removes all dependency files, object files, and binaries |
-| make -f &lt;mk&gt; count | reports statistics for lines of code, number of files, and git commits |
+Library Build Commands
+----------------------
 
-Note: For projects with only one binary, name your make file "Makefile" or 
-"makefile", then omit "-f &lt;mk&gt;" from the examples above. 
+| Command    | Description |
+|------------|------------ |
+| make all   | (default) same as 'make libd libd libh lint test' |
+| make libs  | builds the static library |
+| make libd  | builds the dynamic library |
+| make libh  | builds the library include directory |
+| make lint  | runs the cpplint syntax checker on all source files |
+| make test  | builds the test application |
+| make clean | removes all dependency files, object files, and binaries |
+| make count | reports statistics for lines of code, number of files, and git commits |
 
 Excluding Features
 ------------------
@@ -56,7 +67,7 @@ variable empty or delete the line.
 Environment Setup
 -----------------
 
-If you want this to run out-of-the-box with no changes, run the following commands prior 
+If you want to run this example application out-of-the-box with no changes, run the following commands prior 
 to running any make commands:
 
 The example application needs libjsoncpp and libz
