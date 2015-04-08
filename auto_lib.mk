@@ -46,7 +46,7 @@ GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
 .PHONY: all lint libd libs libh test clean count updatemk
 
-all: $(LINT_OUT) libd libs libh test
+all: line libd libs libh test
 
 libd: $(TGT_DLIB)
 

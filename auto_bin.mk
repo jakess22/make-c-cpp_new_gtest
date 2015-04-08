@@ -40,7 +40,7 @@ GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
 .PHONY: all lint app test clean count updatemk
 
-all: $(LINT_OUT) app test
+all: lint app test
 
 app: $(TGT_APP)
 
