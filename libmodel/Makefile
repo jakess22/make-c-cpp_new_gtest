@@ -19,6 +19,7 @@ GTEST_BASE    := $(HOME)/.makeccpp/gtest
 
 #--------------------- Compilation and Linking --------------------------------#
 CXX           := g++
+AR            := gcc-ar
 SRC_EXTS      := .cc .c
 HDR_EXTS      := .h .tcc
 CXX_FLAGS     := -Wall -Wextra -pedantic -Wfatal-errors -std=c++11
