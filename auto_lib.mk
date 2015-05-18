@@ -126,9 +126,7 @@ endif
 count:
 	@echo "lines words bytes file"
 	@wc $(ALL_SRCS) $(ALL_HDRS) | sort -n -k1
-	@echo "number of source files: "$(shell wc $(ALL_SRCS) | tail -n+2 | wc -l)
-	@echo "number of header files: "$(shell wc $(ALL_HDRS) | tail -n+2 | wc -l)
-	@echo "number of total files : "$(shell wc $(ALL_SRCS) $(ALL_HDRS) | tail -n+2 | wc -l)
-	@echo "number of git commits : "$(shell git rev-list HEAD --count)
+	@echo "files : "$(shell wc $(ALL_SRCS) $(ALL_HDRS) | tail -n+2 | wc -l)
+	@echo "commits : "$(shell git rev-list HEAD --count)
 
 -include $(ALL_DEPS)
