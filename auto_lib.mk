@@ -24,7 +24,7 @@ TST_UNIT_DEPS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.d,$(TST_UNIT_SRCS))
 TST_UNIT_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(TST_UNIT_SRCS))
 
 TGT_SRCS := $(filter-out $(TST_UNIT_SRCS),$(ALL_SRCS))
-TGT_HDRS := $(filter-out $(TST_UNIT_SRCS),$(ALL_HDRS))
+TGT_HDRS := $(filter-out $(TST_UNIT_HDRS),$(ALL_HDRS))
 TGT_DEPS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.d,$(TGT_SRCS))
 TGT_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(TGT_SRCS))
 
