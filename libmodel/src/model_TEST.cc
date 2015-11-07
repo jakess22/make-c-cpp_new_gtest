@@ -1,11 +1,11 @@
 /*
  * Copyright (c) 2014, Joe Example
  */
+#include <gtest/gtest.h>
+
 #include "model/Vehicle.h"
 #include "model/Truck.h"
 #include "model/Car.h"
-
-#include "gtest/gtest.h"
 
 TEST(model, all) {
   Vehicle* v1 = new Truck("ford", "f150", 2006, 6);

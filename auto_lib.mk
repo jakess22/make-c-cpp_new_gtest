@@ -44,6 +44,13 @@ LINT_OUT := $(BUILD_BASE)/$(PROGRAM_NAME).lint
 
 GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
+VERBOSE = 0
+ifeq ($(VERBOSE), 0)
+  AT=@
+else
+  AT=
+endif
+
 .PHONY: all lint libd libs libh test clean count updatemk
 
 all: lint libd libs libh test
@@ -59,43 +66,43 @@ lint: $(LINT_OUT)
 test: $(TST_APP)
 
 $(BINARY_BASE):
-	@mkdir -p $@
+	$(AT)mkdir -p $@
 
 $(BLD_DIRS):
-	@mkdir -p $@
+	$(AT)mkdir -p $@
 
 $(LIB_DIRS):
-	@mkdir -p $@
+	$(AT)mkdir -p $@
 
 $(LIB_HDRS): $(INCLUDE_BASE)/%: $(SOURCE_BASE)/% | $(LIB_DIRS)
 	@echo [INC] $<
-	@cp $< $@
+	$(AT)cp $< $@
 
 $(LINT_OUT): $(ALL_SRCS) $(ALL_HDRS) | $(BUILD_BASE)
 ifneq ($(wildcard $(LINT)),)
 	@echo [LINT]
-	@python $(LINT) $(LINT_FLAGS) $(ALL_SRCS) $(ALL_HDRS)
-	@echo "linted" > $(LINT_OUT)
+	$(AT)python $(LINT) $(LINT_FLAGS) $(ALL_SRCS) $(ALL_HDRS)
+	$(AT)echo "linted" > $(LINT_OUT)
 else
 	@echo -n
 endif
 
 $(TGT_DLIB): $(TGT_SLIB) | $(BINARY_BASE)
 	@echo [LD] $@
-	@$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,$@ -o $@ $< $(LINK_FLAGS)
+	$(AT)$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,$@ -o $@ $< $(LINK_FLAGS)
 
 $(TGT_SLIB): $(TGT_OBJS) | $(BUILD_BASE)
 	@echo [AR] $@
-	@$(AR) rcs $@ $(TGT_OBJS)
+	$(AT)$(AR) rcs $@ $(TGT_OBJS)
 
 $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@echo [CC] $<
-	@$(CXX) $(CXX_FLAGS) -fPIC $(HDR_INC) -MD -MP -c -o $@ $<
+	$(AT)$(CXX) $(CXX_FLAGS) -fPIC $(HDR_INC) -MD -MP -c -o $@ $<
 
 $(TST_APP): $(TST_UNIT_OBJS) $(TGT_SLIB) $(STATIC_LIBS) | $(BINARY_BASE)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [LD] $@
-	@$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TGT_SLIB) $(STATIC_LIBS) $(GTEST_MAIN) $(LINK_FLAGS) -o $(TST_APP) -lpthread
+	$(AT)$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TGT_SLIB) $(STATIC_LIBS) $(GTEST_MAIN) $(LINK_FLAGS) -o $(TST_APP) -lpthread
 else
 	@echo -n
 endif
@@ -103,7 +110,7 @@ endif
 $(TST_UNIT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [CC] $<
-	@$(CXX) $(CXX_FLAGS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
+	$(AT)$(CXX) $(CXX_FLAGS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
 else
 	@echo -n
 endif
@@ -121,7 +128,7 @@ ifeq ($(SOURCE_BASE), $(INCLUDE_BASE))
 	@echo "Awwww, clean will destroy your source if you build in the same spot!"
 	false
 endif
-	rm -rf $(BUILD_BASE) $(BINARY_BASE) $(INCLUDE_BASE)
+	$(AT)rm -rf $(BUILD_BASE) $(BINARY_BASE) $(INCLUDE_BASE)
 
 count:
 	@echo "lines words bytes file"

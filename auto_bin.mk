@@ -38,6 +38,13 @@ LINT_OUT := $(BUILD_BASE)/$(PROGRAM_NAME).lint
 
 GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
 
+VERBOSE = 0
+ifeq ($(VERBOSE), 0)
+  AT=@
+else
+  AT=
+endif
+
 .PHONY: all lint app test clean count updatemk
 
 all: lint app test
@@ -49,32 +56,32 @@ lint: $(LINT_OUT)
 test: $(TST_APP)
 
 $(BINARY_BASE):
-	@mkdir -p $@
+	$(AT)mkdir -p $@
 
 $(BLD_DIRS):
-	@mkdir -p $@
+	$(AT)mkdir -p $@
 
 $(LINT_OUT): $(ALL_SRCS) $(ALL_HDRS) | $(BUILD_BASE)
 ifneq ($(wildcard $(LINT)),)
 	@echo [LINT]
-	@python $(LINT) $(LINT_FLAGS) $(ALL_SRCS) $(ALL_HDRS)
-	@echo "linted" > $(LINT_OUT)
+	$(AT)python $(LINT) $(LINT_FLAGS) $(ALL_SRCS) $(ALL_HDRS)
+	$(AT)echo "linted" > $(LINT_OUT)
 else
 	@echo -n
 endif
 
 $(TGT_APP): $(TGT_OBJS) $(STATIC_LIBS) | $(BINARY_BASE)
 	@echo [LD] $@
-	@$(CXX) $(CXX_FLAGS) $(TGT_OBJS) $(STATIC_LIBS) $(LINK_FLAGS) -o $(TGT_APP)
+	$(AT)$(CXX) $(CXX_FLAGS) $(TGT_OBJS) $(STATIC_LIBS) $(LINK_FLAGS) -o $(TGT_APP)
 
 $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@echo [CC] $<
-	@$(CXX) $(CXX_FLAGS) $(HDR_INC) -MD -MP -c -o $@ $<
+	$(AT)$(CXX) $(CXX_FLAGS) $(HDR_INC) -MD -MP -c -o $@ $<
 
 $(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(STATIC_LIBS) | $(BINARY_BASE)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [LD] $@
-	@$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(GTEST_MAIN) $(STATIC_LIBS) $(LINK_FLAGS) -o $(TST_APP) -lpthread
+	$(AT)$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(GTEST_MAIN) $(STATIC_LIBS) $(LINK_FLAGS) -o $(TST_APP) -lpthread
 else
 	@echo -n
 endif
@@ -82,7 +89,7 @@ endif
 $(TST_UNIT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [CC] $<
-	@$(CXX) $(CXX_FLAGS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
+	$(AT)$(CXX) $(CXX_FLAGS) $(HDR_INC) -I$(GTEST_BASE)/include -MD -MP -c -o $@ $<
 else
 	@echo -n
 endif
@@ -96,7 +103,7 @@ ifeq ($(SOURCE_BASE), $(BINARY_BASE))
 	@echo "Awwww, clean will destroy your source if you build in the same spot!"
 	false
 endif
-	rm -rf $(BUILD_BASE) $(BINARY_BASE)
+	$(AT)rm -rf $(BUILD_BASE) $(BINARY_BASE)
 
 count:
 	@echo "lines words bytes file"
