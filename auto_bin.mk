@@ -95,7 +95,11 @@ else
 endif
 
 check: test
+ifneq ($(wildcard $(GTEST_MAIN)),)
 	@$(TST_APP)
+else
+	@echo -n
+endif
 
 clean:
 ifeq ($(SOURCE_BASE), $(BUILD_BASE))
