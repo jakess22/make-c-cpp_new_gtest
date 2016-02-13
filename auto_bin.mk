@@ -45,7 +45,7 @@ else
   AT=
 endif
 
-.PHONY: all lint app test clean count updatemk
+.PHONY: all lint app test clean count updatemk check
 
 all: lint app test
 
@@ -93,6 +93,9 @@ ifneq ($(wildcard $(GTEST_MAIN)),)
 else
 	@echo -n
 endif
+
+check: test
+	@$(TST_APP)
 
 clean:
 ifeq ($(SOURCE_BASE), $(BUILD_BASE))
