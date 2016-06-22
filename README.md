@@ -20,16 +20,6 @@ Requirements
 Unix commands. It may be possible to use `Makefile` in other environments
 with little or no modification, but it hasn't been tested here!
 
-Example
--------
-
-The example directory is an example C++ project that utilizes most of
-the features of the automated Makefile system. The example project uses
-two 3rd party libraries, zlib and jsoncpp (must be installed on the system), 
-contains a unit test for Google's testing framework, and is compliant with 
-Google's cpplint.py syntax style checker. The example is comprised of two
-subprojects, one shared library, and one binary.
-
 Binary Build Commands
 ---------------------
 
@@ -67,19 +57,14 @@ variable empty or delete the line.
 Environment Setup
 -----------------
 
-If you want to run this example application out-of-the-box with no changes, run the following commands prior 
-to running any make commands:
-
-The example application needs libjsoncpp and libz
+The following commands setup the make environment completely within `~/.makeccpp`.
 ```bash
-sudo apt-get install libjsoncpp-dev zlib1g-dev
-```
-
-```bash
-mkdir ~/.makeccpp
+git clone https://github.com/nicmcd/make-c-cpp ~/.makeccpp
 cd ~/.makeccpp
-git clone https://github.com/nicmcd/gtest.git
-git clone https://github.com/nicmcd/cpplint.git
-cd gtest/make
-make gtest_main.a
+make
 ```
+
+Example Project
+---------------
+See [this example project](https://github.com/nicmcd/make-c-cpp-test) for a simple
+example of how to use this make system.
