@@ -1,6 +1,6 @@
-[submodule "gtest"]
-	path = gtest
-	url = git@github.com:nicmcd/gtest
 [submodule "cpplint"]
 	path = cpplint
-	url = git@github.com:nicmcd/cpplint
+	url = https://github.com/nicmcd/cpplint
+[submodule "gtest"]
+	path = gtest
+	url = https://github.com/nicmcd/gtest
