@@ -125,6 +125,13 @@ else
 	@echo -n
 endif
 
+checkm: test
+ifneq ($(wildcard $(GTEST_MAIN)),)
+	@valgrind --log-fd=1 --leak-check=full --show-reachable=yes --track-origins=yes --track-fds=yes $(TST_APP)
+else
+	@echo -n
+endif
+
 clean:
 ifeq ($(SOURCE_BASE), $(BUILD_BASE))
 	@echo "Awwww, clean will destroy your source if you build in the same spot!"
