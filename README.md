@@ -23,28 +23,32 @@ with little or no modification, but it hasn't been tested here!
 Binary Build Commands
 ---------------------
 
-| Command    | Description |
-|------------|------------ |
-| make all   | (default) same as 'make app lint test' |
-| make app   | builds the target application |
-| make lint  | runs the cpplint syntax checker on all source files |
-| make test  | builds the test application |
-| make clean | removes all dependency files, object files, and binaries |
-| make count | reports statistics for lines of code, number of files, and git commits |
+| Command     | Description |
+|-------------|------------ |
+| make all    | (default) same as 'make app lint test' |
+| make app    | builds the target application |
+| make lint   | runs the cpplint syntax checker on all source files |
+| make test   | builds the test application |
+| make check  | run the test application |
+| make checkm | run the test application with valgrind memory checking |
+| make clean  | removes all dependency files, object files, and binaries |
+| make count  | reports statistics for lines of code, number of files, and git commits |
 
 Library Build Commands
 ----------------------
 
-| Command    | Description |
-|------------|------------ |
-| make all   | (default) same as 'make libs libd libh lint test' |
-| make libs  | builds the static library |
-| make libd  | builds the dynamic library |
-| make libh  | builds the library include directory |
-| make lint  | runs the cpplint syntax checker on all source files |
-| make test  | builds the test application |
-| make clean | removes all dependency files, object files, and binaries |
-| make count | reports statistics for lines of code, number of files, and git commits |
+| Command     | Description |
+|-------------|------------ |
+| make all    | (default) same as 'make libs libd libh lint test' |
+| make libs   | builds the static library |
+| make libd   | builds the dynamic library |
+| make libh   | builds the library include directory |
+| make lint   | runs the cpplint syntax checker on all source files |
+| make test   | builds the test application |
+| make check  | run the test application |
+| make checkm | run the test application with valgrind memory checking |
+| make clean  | removes all dependency files, object files, and binaries |
+| make count  | reports statistics for lines of code, number of files, and git commits |
 
 Excluding Features
 ------------------
