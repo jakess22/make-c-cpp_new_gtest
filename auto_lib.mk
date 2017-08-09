@@ -112,9 +112,9 @@ else
 	@echo -n
 endif
 
-$(TGT_DLIB): $(TGT_SLIB) | $(BINARY_BASE)
+$(TGT_DLIB): $(TGT_OBJS) | $(BINARY_BASE)
 	@echo [LD] $@
-	$(AT)$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,$@ -o $@ $< $(LINK_FLAGS)
+	$(AT)$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,`basename $@` -o $@ $(TGT_OBJS) $(LINK_FLAGS)
 
 $(TGT_SLIB): $(TGT_OBJS) | $(BUILD_BASE)
 	@echo [AR] $@
