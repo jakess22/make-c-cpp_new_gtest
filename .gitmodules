@@ -4,3 +4,6 @@
 [submodule "gtest"]
 	path = gtest
 	url = https://github.com/nicmcd/gtest
+[submodule "gtest-parallel"]
+	path = gtest-parallel
+	url = https://github.com/nicmcd/gtest-parallel

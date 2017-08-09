@@ -67,6 +67,7 @@ LINT_FLAGS += --root=$(SOURCE_BASE) --extensions=$(ALL_EXTS)
 LINT_OUT := $(BUILD_BASE)/$(PROGRAM_NAME).lint
 
 GTEST_MAIN := $(GTEST_BASE)/make/gtest_main.a
+GTEST_PARALLEL_RUN := $(GTEST_PARALLEL)/gtest-parallel
 
 VERBOSE = 0
 ifeq ($(VERBOSE), 0)
@@ -141,7 +142,11 @@ endif
 
 check: test
 ifneq ($(wildcard $(GTEST_MAIN)),)
+ifneq ($(wildcard $(GTEST_PARALLEL_RUN)),)
+	@$(GTEST_PARALLEL_RUN) $(TST_APP)
+else
 	@$(TST_APP)
+endif
 else
 	@echo -n
 endif

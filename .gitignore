@@ -16,7 +16,6 @@
 *.d
 
 # GTest
-gtest-*
 bin
 bld
 inc
