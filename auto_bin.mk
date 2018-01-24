@@ -31,6 +31,9 @@
 
 .SUFFIXES:
 
+# this function reverses a list
+reverse = $(if $(1),$(call reverse,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
+
 TGT_APP := $(BINARY_BASE)/$(PROGRAM_NAME)
 TST_APP := $(BINARY_BASE)/$(PROGRAM_NAME)$(TEST_SUFFIX)
 
@@ -97,7 +100,7 @@ endif
 
 $(TGT_APP): $(TGT_OBJS) $(STATIC_LIBS) | $(BINARY_BASE)
 	@echo [LD] $@
-	$(AT)$(CXX) $(CXX_FLAGS) $(TGT_OBJS) $(STATIC_LIBS) $(LINK_FLAGS) -o $(TGT_APP)
+	$(AT)$(CXX) $(CXX_FLAGS) $(TGT_OBJS) $(call reverse, $(STATIC_LIBS)) $(LINK_FLAGS) -o $(TGT_APP)
 
 $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 	@echo [CC] $<
@@ -106,7 +109,7 @@ $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 $(TST_APP): $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(STATIC_LIBS) | $(BINARY_BASE)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [LD] $@
-	$(AT)$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(GTEST_MAIN) $(STATIC_LIBS) $(LINK_FLAGS) -o $(TST_APP) -lpthread
+	$(AT)$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TST_DEPS_OBJS) $(GTEST_MAIN) $(call reverse, $(STATIC_LIBS)) $(LINK_FLAGS) -o $(TST_APP) -lpthread
 else
 	@echo -n
 endif

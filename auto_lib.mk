@@ -31,6 +31,9 @@
 
 .SUFFIXES:
 
+# this function reverses a list
+reverse = $(if $(1),$(call reverse,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
+
 TGT_DLIB := $(BINARY_BASE)/lib$(PROGRAM_NAME).so
 TGT_SLIB := $(BUILD_BASE)/lib$(PROGRAM_NAME).a
 TST_APP := $(BINARY_BASE)/$(PROGRAM_NAME)$(TEST_SUFFIX)
@@ -127,7 +130,7 @@ $(TGT_OBJS): $(BUILD_BASE)/%.o: $(SOURCE_BASE)/% | $(BLD_DIRS)
 $(TST_APP): $(TST_UNIT_OBJS) $(TGT_SLIB) $(STATIC_LIBS) | $(BINARY_BASE)
 ifneq ($(wildcard $(GTEST_MAIN)),)
 	@echo [LD] $@
-	$(AT)$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TGT_SLIB) $(STATIC_LIBS) $(GTEST_MAIN) $(LINK_FLAGS) -o $(TST_APP) -lpthread
+	$(AT)$(CXX) $(CXX_FLAGS) $(TST_UNIT_OBJS) $(TGT_SLIB) $(GTEST_MAIN) $(call reverse, $(STATIC_LIBS)) $(LINK_FLAGS) -o $(TST_APP) -lpthread
 else
 	@echo -n
 endif
