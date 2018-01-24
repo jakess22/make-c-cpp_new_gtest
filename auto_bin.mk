@@ -44,6 +44,11 @@ ALL_HDRS := $(foreach EXT,$(HDR_EXTS),$(shell find $(SOURCE_BASE) -type f -iname
 ALL_DEPS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.d,$(ALL_SRCS))
 ALL_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(ALL_SRCS))
 
+PB_SRCS := $(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)" -iname "*.pb.*"))
+PB_HDRS := $(foreach EXT,$(HDR_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(EXT)" -iname "*.pb.*"))
+LINT_SRCS := $(filter-out $(PB_SRCS),$(ALL_SRCS))
+LINT_HDRS := $(filter-out $(PB_HDRS),$(ALL_HDRS))
+
 TST_UNIT_SRCS := $(foreach EXT,$(SRC_EXTS),$(shell find $(SOURCE_BASE) -type f -iname "*$(TEST_SUFFIX)$(EXT)"))
 TST_UNIT_DEPS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.d,$(TST_UNIT_SRCS))
 TST_UNIT_OBJS := $(patsubst $(SOURCE_BASE)%,$(BUILD_BASE)%.o,$(TST_UNIT_SRCS))
@@ -92,7 +97,7 @@ $(BLD_DIRS):
 $(LINT_OUT): $(ALL_SRCS) $(ALL_HDRS) | $(BUILD_BASE)
 ifneq ($(wildcard $(LINT)),)
 	@echo [LINT]
-	$(AT)python $(LINT) $(LINT_FLAGS) $(ALL_SRCS) $(ALL_HDRS)
+	$(AT)python $(LINT) $(LINT_FLAGS) $(LINT_SRCS) $(LINT_HDRS)
 	$(AT)echo "linted" > $(LINT_OUT)
 else
 	@echo -n
