@@ -3,7 +3,7 @@
 	url = https://github.com/nicmcd/cpplint
 [submodule "gtest"]
 	path = gtest
-	url = https://github.com/nicmcd/gtest-parallel
+	url = https://github.com/google/googletest/tree/main/googletest
 [submodule "gtest-parallel"]
 	path = gtest-parallel
 	url = https://github.com/nicmcd/gtest-parallel
